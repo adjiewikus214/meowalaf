@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-10-01T05:56:43.709Z",
+  "surahCount": 114,
+  "ayahCount": 6236,
+  "checksums": {
+    "surah-metadata.json": "1d0371531a2ebebc7251d4c52589c0e8d68271d66dbce4679a36c3e9e1cbc260",
+    "quran-uthmani.json": "67da4e46584e53849cd8f4b19a998becb4a56ea32c4b6cbef108212deb28b3e0",
+    "translation-id.json": "92ca7599040e887c58129f2327e9ce2a4561e1df2b1ac454d77f383c38eca9cc",
+    "audio-reciters.json": "1ad12e4086be075720965dc4ac86f60438dff7366dec19f163fd0c4866199a9d",
+    "word-data-juz30.json": "4ab1c092c7e84ea82f1c07a1412664b49f68de723e7378bb9a29a64ca2619928"
+  },
+  "attributions": [
+    "Teks Al-Quran, terjemahan Indonesia, dan metadata surah: Kementerian Agama RI via equran.id (open data)",
+    "Audio murottal per ayat: cdn.equran.id",
+    "Qari: Abdullah Al-Juhany",
+    "Qari: Abdul Muhsin Al-Qasim",
+    "Qari: Abdurrahman as-Sudais",
+    "Qari: Ibrahim Al-Dossari",
+    "Qari: Misyari Rasyid Al-Afasy",
+    "Qari: Yasser Al-Dosari",
+    "Segmentasi kata & akar kata (morfologi): QuranHub MCP (api.qurani.ai, data quran.com v4) — akses 2026-10-01"
+  ]
+}

@@ -1,0 +1,111 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+@import "nativewind/theme";
+
+/*
+ * Design tokens Meowalaf (DESIGN.md § 2–3, BRAND.md § 4) — Tailwind v4 @theme.
+ * Nama kelas: bg-bg-base, bg-brand-emerald, text-ink-primary, dst.
+ */
+@theme {
+  --color-bg-base: #0b0f0e;
+  --color-bg-elevated: #141b19;
+  --color-brand-emerald: #10b981;
+  --color-brand-teal: #14b8a6;
+  --color-brand-violet: #8b5cf6;
+  --color-brand-pink: #ec4899;
+  --color-flame: #f97316;
+  --color-ink-primary: #f4f7f6;
+  --color-ink-secondary: #9ca8a4;
+  --color-ink-arab: #eaf2ef;
+  --color-success: #34d399;
+  --color-danger: #f87171;
+  --color-warn: #fbbf24;
+  --color-line: rgba(255, 255, 255, 0.08);
+
+  /*
+   * Palet maskot kucing (BRAND.md § 3–4): Abu = British Shorthair abu-abu,
+   * varian putih untuk kucing putih. Token ini milik maskot & ornamen kucing;
+   * TIDAK dipakai mewarnai teks ayat (aturan yang sama dengan brand color).
+   */
+  --color-cat-ash: #98a4ad;
+  --color-cat-ash-deep: #78858f;
+  --color-cat-cream: #f2eee6;
+  --color-cat-cream-deep: #d8d2c7;
+  --color-cat-light: #fbf8f3;
+  --color-cat-blush: #e79f9a;
+  --color-cat-eye: #d08a3e;
+  --color-cat-ink: #232b2f;
+  --color-cat-cap: #6fa9c0;
+  --color-gold: #e0b44a;
+
+  --radius-card: 20px;
+  --radius-sheet: 28px;
+
+  --font-display: "Poppins-Bold";
+  --font-sans: "Poppins-Regular";
+  /*
+   * Fallback KHUSUS untuk kata ber-transliterasi Arab (Ḥ ṣ Ṭ ẓ, macron).
+   * Poppins tidak punya glyph itu, sementara 32 ayat di 27 surah menerjemahkannya;
+   * tanpa token ini "Subḥānallāhumma" jadi campuran dua typeface di tengah
+   * kalimat. Dipakai lewat komponen `TransliteratedText`, bukan ditulis manual
+   * (src/ui/transliteration.ts).
+   */
+  --font-translit: "NotoSans-Regular";
+  /*
+   * Teks mushaf (materi lesson, mushaf, nama surah). Tanpa token ini kelas
+   * `font-arab` tidak pernah terbentuk, teks Arab jatuh ke font browser,
+   * sementara Amiri tetap dibundel dan diunduh saat startup.
+   */
+  --font-arab: "Amiri-Regular";
+}
+
+/*
+ * Body font benar-benar dipakai app — ini bukan sekadar formalitas.
+ *
+ * react-native-web memberikan setiap `<Text>` rule-nya sendiri
+ * (`font: 14px -apple-system, BlinkMacSystemFont, …`, class atomic `css-*`),
+ * sehingga `body { font-family: var(--font-sans) }` dari preflight hanya berlaku
+ * untuk elemen lain. Akibatnya SEMUA teks app dirender font sistem, bukan font
+ * brand — ketahuan dari computed style, bukan dari mata: `.font-display`/
+ * `.font-arab`/*.font-translit* berhasil (utility merekaoverride rule itu), tapi
+ * body text tidak pernah memakai `--font-sans`.
+ *
+ * Karena utility NativeWind hanya kelas CSS biasa, override di bawah memakai
+ * `!important` supaya menang dari rule react-native-web, dan setiap token font
+ * punya baris sendiri dengan specificity lebih tinggi — jadi "pakai font lain"
+ * tetap cukup menulis kelasnya, bukan bergantung urutan stylesheet.
+ *
+ * `src/ui/fonts.test.ts` menjaga: setiap token `--font-*` di file ini harus
+ * punya baris override seperti di bawah, dan berkas fontnya harus benar-benar
+ * ada + dimuat di `FONT_MAP`.
+ */
+[dir] {
+  font-family: var(--font-sans) !important;
+}
+
+[dir].font-display,
+.font-display {
+  font-family: var(--font-display) !important;
+}
+
+[dir].font-arab,
+.font-arab {
+  font-family: var(--font-arab) !important;
+}
+
+[dir].font-translit,
+.font-translit {
+  font-family: var(--font-translit) !important;
+}
+
+/* Ikon glyph (Ionicons) juga punya rule inline `font-family: ionicons`, dan
+ * `!important` di blok [dir] menimpanya — hasilnya glyph Private Use Area
+ * dirender dengan Poppins, jadi yang terlihat KOTAK KOSONG, bukan ikon.
+ * `src/ui/icons.ts` menempelkan kelas ini ke setiap ikon; baris di sini yang
+ * mengembalikannya. Tanpa `!important` tidak akan cukup: rule react-native-web
+ * (atomic `css-*`) tetap menang dari utility kelas biasa. */
+[dir].font-ionicons,
+.font-ionicons {
+  font-family: ionicons !important;
+}
